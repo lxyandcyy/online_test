@@ -16,6 +16,7 @@
 <script>
 import UserCard from "./UserCard.vue";
 import Account from "./Account.vue";
+import TimeConverse from '@/utils/timeConverse'
 
 export default {
   name: "Profile",
@@ -32,6 +33,7 @@ export default {
   },
   created() {
     this.userInfo = this.$store.state.user;
+    this.userInfo.reg_time=TimeConverse.utcToLocal(this.userInfo.reg_time)
   }
 };
 </script>

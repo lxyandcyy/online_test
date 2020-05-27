@@ -21,7 +21,7 @@
         </v-row>
         <v-divider class="mx-4"></v-divider>
         <v-row >
-              <span>注册时间:{{ userInfo.reg_time }}</span>
+              <span>注册时间: {{ userInfo.reg_time }}</span>
         </v-row>
       </v-col>
     </v-card>

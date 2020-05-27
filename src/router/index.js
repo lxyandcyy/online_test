@@ -12,8 +12,8 @@ import api from "../api/api"; // 导入api接口
 
 import question from "@/router/question";
 import paper from "@/router/paper";
-import practicePaper from "@/router/practicePaper";
 import result from "@/router/result";
+import stuResult from "@/router/stu-result";
 import subject from "@/router/subject";
 import records from "@/router/records";
 
@@ -57,11 +57,8 @@ const router = new VueRouter({
         {path: "student", name: "Student", component: () => import("@/views/Admin/Context/ManageUser/Student"),},
         //用户管理-->管理员列表
         {path: "admin", name: "Admin", component: () => import("@/views/Admin/Context/ManageUser/Admin"),},
-        //错题列表页
-        {path: "error-book", name: "ErrorBook", component: () => import("@/views/Admin/Context/Error/ErrorBook"),},
         ...question,
         ...paper,
-        ...practicePaper,
         ...result,
         ...subject,
         records[1],
@@ -77,21 +74,16 @@ const router = new VueRouter({
         {path: "exam-list", name: "ExamList", component: () => import("@/views/Student/Exam/ExamList"),},
         //考生主页
         {path: "home", name: "stuHome", component: () => import("@/views/Student/Home/Home"),},
-        //错题列表页
-        {path: "error-book", name: "stuErrorBook", component: () => import("@/views/Student/Error/ErrorBook"),},
-        //智能训练页
-        {path: "practice-list", name: "PracticeList", component: () => import("@/views/Student/Practice/PracticeList"),},
         //个人中心
         {path: "profile", name: "stuProfile", component: () => import("@/views/Student/Profile/Profile"),},
           records[0],
-        //结果分析
-        {path: "result-analysis", name: "ResultAnalysis", component: () => import("@/views/Student/ResultAnalysis/ResultAnalysis"),},
+        ...stuResult
       ],
     },
     //答题页面
     {path: "/exam-paper/do/:id", name: "DoExam", component: () => import("@/views/Student/Exam/DoExam"),},
-    //智能训练答题页面
-    {path: "/practice-paper/do/:id", name: "DoPractice", component: () => import("@/views/Student/Practice/DoPractice"),},
+      // 查看答题卡
+    records[2],
   ],
 });
 

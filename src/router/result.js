@@ -17,4 +17,10 @@ export default [
     name: "PaperGrade",
     component: () => import("@/views/Admin/Context/ManageGrade/PaperGrade"),
   },
+  // 考试结果分析-->查看试卷分析报告
+  {
+    path: "paper-grade/look/:id",
+    name: "LookPaperGrade",
+    component: () => import("@/views/Admin/Context/ManageGrade/LookPaperGrade"),
+  },
 ];

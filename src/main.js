@@ -11,11 +11,16 @@ import "material-design-icons-iconfont/dist/material-design-icons.css";
 import {Radio} from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 import '@/utils/message'
+import ECharts from 'vue-echarts'
+import 'echarts/lib/chart/bar'
+import 'echarts/lib/chart/pie'
+import 'echarts/lib/component/tooltip'
 
 //全局注册
 Vue.use(Radio);
 Vue.prototype.$axios = axios;
 Vue.prototype.$api = api;
+Vue.component('v-chart', ECharts)
 
 Vue.config.productionTip = false;
 

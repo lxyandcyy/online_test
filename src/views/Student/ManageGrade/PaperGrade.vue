@@ -18,7 +18,7 @@
             :search="table.search">
       <!-- 操作 -->
       <template v-slot:item.action="slotScope">
-        <router-link :to="{path:'/layout/paper-grade/look/'+slotScope.item.id}">
+        <router-link :to="{path:'/student-layout/paper-grade/look/'+slotScope.item.id}">
           <v-btn class="mr-2" color="primary"  small >
             查看试卷分析报告
           </v-btn>
@@ -99,14 +99,8 @@
         table: {
           search: "",
           headers: [
-            { text: "ID", align: "start", value: "id" },
             { text: "试卷名称", value: "name" },
             { text: "学科", align: "start", value: "subjectName" },
-            { text: "创建人", value: "createUser" },
-            { text: "创建时间(Date)", value: "createTime" },
-            { text: "发布时间(Date)", value: "startTime" },
-            { text: "截至时间(Date)", value: "endTime" },
-            { text: "是否发布", value: "isPublish" },
             { text: "操作", value: "action" },
           ],
           desserts: [],

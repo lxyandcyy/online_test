@@ -2,7 +2,7 @@
     <div id="record-list">
         <v-card flat tile>
             <v-card-title>
-                考试记录
+                测试记录
                 <v-spacer></v-spacer>
                 <v-text-field
                         v-model="search"
@@ -23,13 +23,14 @@
 </template>
 
 <script>
+    import TimeConverse from '@/utils/timeConverse'
     export default {
         name: "ExamList",
         data() {
             return {
                 search: "",
                 headers: [
-                    { text: "试卷名称", value: "name" },
+                    { text: "试卷名称", value: "paperName" },
                     { text: "做题日期", value: "doTime" },
                     { text: "耗费时间（s）", value: "spendTime" },
                     { text: "得分", value: "userScore" },
@@ -51,18 +52,18 @@
                         d.push({
                             id: item.id,
                             key: index,
-                            name:item.id,
-                            doTime: item.doTime,
+                            paperName:item.paperName,
+                            doTime: TimeConverse.utcToLocal(item.doTime),
                             spendTime: item.spendTime,
                             userScore: item.userScore,
-                            userId: item.userId,
+                            userId: this.$store.state.user.user_id,
                         });
                     });
                     this.table = d;
                 });
             },
             examResult(userId,examPaperId){
-                this.$router.push({path:'/record',query:{userId:userId,examPaperId:examPaperId}})
+                this.$router.push({path:'/one-record',query:{userId:userId,examPaperId:examPaperId}})
             }
         },
     };

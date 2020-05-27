@@ -23,4 +23,6 @@ export default [
     name: "EditPaper",
     component: () => import("@/views/Admin/Context/ManagePaper/EditPaper"),
   },
+
+
 ];

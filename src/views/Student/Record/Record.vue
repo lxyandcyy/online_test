@@ -1,5 +1,5 @@
 <template>
-    <div id="record">
+    <div id="record" :disabled=true>
         <v-app-bar
                 app
                 color="white"
@@ -7,12 +7,7 @@
                 class="countdowns"
         >
             <!-- 头部 -->
-            <router-link :to="{path:'/student-layout/exam-list'}">
-                <v-btn class="ma-2" color=" darken-2">
-                    <v-icon dark left>mdi-arrow-left</v-icon>
-                </v-btn>
-            </router-link>
-            <span>剩余时间：{{ remainTime }}</span>
+            <span>耗费时间：{{spendTime}}s</span>
         </v-app-bar>
 
         <!-- 中部 -->
@@ -22,17 +17,9 @@
                     <header class="paper-header">
                         <h1>{{ examPaper.name }}</h1>
                         <div>
-              <span class="question-title-padding"
-              >试卷总分：{{ examPaper.PaperScore }}
-              </span>
-                            <span class="question-title-padding"
-                            >考试时间：{{ examPaper.countDown }} 分钟
-              </span>
-                            <span class="question-title-padding"
-                            >当前考生：
-                {{ user.user_id }}
-              </span
-              >
+                          <span class="question-title-padding">试卷总分：{{ examPaper.paperScore }}  </span>
+                          <span class="question-title-padding">得分：{{ userScore }} 分  </span>
+                          <span class="question-title-padding">当前考生：{{ user.user_id }}  </span>
                         </div>
                     </header>
                     <!-- 题目内容区 -->
@@ -47,22 +34,23 @@
                             <v-list-item-content>
                                 <!--                题目标题-->
                                 <v-list-item-title class="headline mb-1">
-                                    {{ current_question + 1 }}.{{ currentQueItem.topic }}
+                                    {{ current_question + 1 }}. {{ currentQueItem.topic }}
                                 </v-list-item-title>
+                                <v-col class="flex right">
+                                    <span>({{questions[current_question].score}}分)</span>
+                                </v-col>
+
                                 <!-- 选项列表 -->
                                 <v-list-item-subtitle>
                                     <v-item v-slot:default="{ active, toggle }">
                                         <v-chip-group
                                                 column
                                                 active-class="purple"
-                                                v-model="current_option"
-                                        >
+                                                v-model="questions[current_question].select_index">
                                             <v-chip
                                                     class="option"
                                                     v-for="(item, i) in questions[current_question].Options"
-                                                    :key="i"
-                                                    @click="toggleOption(item.id)"
-                                            >
+                                                    :key="i">
                                                 {{ item.label }}.
                                                 {{ item.description }}
                                             </v-chip>
@@ -78,14 +66,6 @@
                             >
                             <v-btn class="ma-2" outlined color="indigo" @click="nextQue()"
                             >下一题</v-btn
-                            >
-                            <v-btn
-                                    class="ma-2"
-                                    tile
-                                    color="indigo"
-                                    dark
-                                    @click="confirmSubmitExam"
-                            >提交</v-btn
                             >
                         </v-card-actions>
                     </v-card>
@@ -107,75 +87,43 @@
                         <div class="py-3">
                             <v-btn
                                     class="ma-2"
-                                    :outlined="item.current_option === -1 ? true : false"
+                                    :outlined="item.select_option === -1 ? true : false"
                                     fab
                                     color="teal"
-                                    v-for="(item, i) in examPaper.questions"
+                                    v-for="(item, i) in questions"
                                     :key="i"
                                     @click="jumpToQue(i)"
-                            >{{ i + 1 }}</v-btn
-                            >
+                            >{{ i + 1 }}</v-btn>
                         </div>
                     </v-sheet>
                 </v-bottom-sheet>
             </v-col>
         </v-footer>
 
-        <!-- 是否提交的对话框 -->
-        <v-dialog v-model="dialog_tips.dialog" persistent max-width="290">
-            <v-card>
-                <v-card-text>{{ dialog_tips.card_title }}</v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="green darken-1" text @click="submitExam"
-                    >是的，我确定提交</v-btn
-                    >
-                    <v-btn color="green darken-1" text @click="dialog_tips.dialog = false"
-                    >返回继续答题</v-btn
-                    >
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
-
-        <!--    考试结果展示对话框-->
-        <v-dialog v-model="dialog_tips.dialog2" persistent max-width="290">
-            <v-card>
-                <v-card-text>你的得分是：{{ result.score }}</v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="green darken-1" @click="goExamResult">前往查看考试结果</v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
     </div>
 </template>
 
 <script>
     import { mapState } from "vuex";
+
     export default {
         data() {
             return {
-                dialog_tips: {
-                    dialog: false,
-                    dialog2:false,
-                    card_title: "",
-                },
-                current_paper_id: this.$route.query.id,
+                userId:this.$route.query.userId,
+                examPaperId:this.$route.query.examPaperId,
+                spendTime:0,
+                userScore:0,
                 current_question: 0,
-                current_option: -1, //当前选项
+                select_option: -1, //当前选项
                 sheet: false,
-                remainTime: 0,
-                timer: null,
+                select_index:-1,
                 examPaper: {
                     // name: "",
                     // countDown: 0,
-                    // createUser: 0,
-                    // SubjectId: 0,
-                    // startTime:"",
-                    // endTime:"",
+                    // paperScore:33,试卷总分
                     // questions: [{
                     //    id:,
-                    //    current_option:,
+                    //    select_option:,
                     // }], //题目列表
                 },
                 questions:[{}
@@ -187,24 +135,13 @@
                     // createUser: 63
                     // difficult: "1"
                     // id: 49
+                    // score:33
                     // topic: "sadfa"
                 ],
-                result:{
-                    score:-1,
-                }
             };
         },
         async created() {
-            // let examPaper=await this.searchPaper()
-            // // 获取详细的题目选项
-            // let all_questions=[]
-            // examPaper.questions.forEach(item=>{
-            //     all_questions.push(item.questionId)
-            // })
-            // this.questions=await this.searchOptions(all_questions)
-
-            // 查看考试结果（答题卡）
-            this.searchExamResult(this.$route.query.userId,this.$route.query.examPaperId)
+             await this.searchAnswerSheet()
         },
         computed: {
             ...mapState(["user"]),
@@ -213,24 +150,31 @@
             },
         },
         methods: {
-            searchExamResult(userId,examPaperId){
-              this.$api.ExamResult({userId:userId,examPaperId:examPaperId})
-            },
-            async searchPaper(){
-                await this.$api.SelPaper(this.$route.params.id).then((res) => {
-                    console.log(res)
-                    let questions= res.data.examPaper_question.map(item=>{item.current_option=-1;return item})
-                    this.examPaper={
-                        ...res.data.examPaper,
-                        questions:questions
+            async searchAnswerSheet(){//查询答题卡
+              let answer =await this.$api.AnswerSheet({userId:this.userId,examPaperId:this.examPaperId})
+                console.log(answer)
+                this.spendTime=answer.data.spendTime;
+                this.userScore=answer.data.userScore
+                this.examPaper={...answer.data.examPaper}
+                this.questions=[...answer.data.question_records]
+                this.examPaper.questions=[]
+                //设置所选项 select_index
+                for(let i=0;i<this.questions.length;i++){
+                    let j;
+                    for(j=0;j<this.questions[i].Options.length;j++){
+                        if(this.questions[i].status.OptionId===this.questions[i].Options[j].id){
+                            //设置初始所选项
+                            this.questions[i].select_index=j;
+                            break;
+                        }
                     }
-                });
-                return this.examPaper
-            },
-            async searchOptions(allQuestion){
-                let res=await this.$api.GetOptions({allQuestion:allQuestion})
-                console.log(res)
-                return res.data
+                    //如果该题未答
+                    if(j===this.questions[i].Options.length){
+                        this.questions[i].select_index=-1;
+                    }
+                }
+
+                console.log(this.examPaper)
             },
             nextQue() {
                 if (this.current_question < this.examPaper.questions.length - 1) {
@@ -252,73 +196,18 @@
                 this.current_question = queIndex;
                 this.getOptionFromQueItems(queIndex);
             },
-            toggleOption(optionId) {
-                this.examPaper.questions[this.current_question].current_option = optionId;
-            },
             getOptionFromQueItems(queIndex) {
-                this.current_option = this.examPaper.questions[queIndex].current_option;
-            },
-            // 查看结果分析
-            goResultAnalysit(){
-                this.dialog_tips.dialog2 = false;
-                // this.$router.push({path:'/student-layout/record/'})//前往用户考试结果分析页面
-            },
-            // 确认是否提交
-            confirmSubmitExam() {
-                // 判断是否有未填写题目
-                let i;
-                for (i = 0; i < this.examPaper.questions.length; i++) {
-                    let item = this.examPaper.questions[i];
-                    if (item.current_option === -1) {
-                        this.dialog_tips.dialog = true;
-                        this.dialog_tips.card_title = "你还有题目未做，是否提交？";
+                // 查询某OptionId所对应的index
+                let options=this.questions[queIndex].Options
+                for(let i=0;i<this.questions[queIndex].Options.length;i++){
+                    if(options[i].id===this.examPaper.questions[queIndex].select_option){
+                        this.select_index=i;
                         break;
+                    } else{
+                        this.select_index=-1;
                     }
                 }
-
-                if (i === this.examPaper.questions.length) {
-                    this.dialog_tips.dialog = true;
-                    this.dialog_tips.card_title = "时间还未到，是否继续提交？";
-                }
             },
-            async submitExam() {
-                this.dialog_tips.dialog = false;
-                // 获取options
-                let options=[];
-                this.examPaper.questions.forEach(item=>{
-                    let option={
-                        optionId:item.current_option,
-                        questionId:item.questionId
-                    }
-                    options.push(option)
-                })
-                // 整合提交的数据
-                let submitForm={
-                    userId:this.user.id,
-                    examPaperId: this.examPaper.id,
-                    spendTime:this.examPaper.countDown*60 - this.remainTime,
-                    options:options
-                }
-
-                // 提交答题卡，计算分数
-                let res = await this.$api.SubmitExam(submitForm);
-                console.log(res);
-                this.result.score=res.data.score
-                if(res.code===200){
-                    this.$message.success(`${res.msg}`)
-                    setTimeout(() => {
-                        clearInterval(this.timer)
-                        this.dialog_tips.dialog2=true;//打开考试结果对话框
-                    }, 1000);
-                }else if(res.code===400){
-                    this.$message.error(`${res.msg}`)
-                    setTimeout(() => {
-                        clearInterval(this.timer)
-                        this.$router.push({path:'/student-layout/exam-list'})
-                    }, 1000);
-                }
-            },
-
         },
     };
 </script>

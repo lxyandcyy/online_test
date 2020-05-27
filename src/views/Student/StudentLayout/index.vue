@@ -95,7 +95,7 @@ export default {
       // { router: "/student-layout/practice-list", name: "智能训练" },
       { router: "/student-layout/exam-list", name: "在线测试" },
       { router: "/student-layout/record/", name: "测试记录" },
-      { router: "/student-layout/result-analysis", name: "测试试卷分析报告" },
+      { router: "/student-layout/paper-grade", name: "测试试卷分析报告" },
     ],
   }),
   methods: {

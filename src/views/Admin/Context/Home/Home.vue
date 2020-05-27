@@ -32,16 +32,16 @@
           </div>
         </v-card>
       </v-col>
-      <v-col >
-        <v-card color="#009688">
-          <div class="d-flex  flex-wrap justify-space-around">
-            <div class="text">
-              <v-card-title class="headline">智能训练试卷总数</v-card-title>
-              <v-card-title>{{practicePaperCount}}</v-card-title>
-            </div>
-          </div>
-        </v-card>
-      </v-col>
+<!--      <v-col >-->
+<!--        <v-card color="#009688">-->
+<!--          <div class="d-flex  flex-wrap justify-space-around">-->
+<!--            <div class="text">-->
+<!--              <v-card-title class="headline">智能训练试卷总数</v-card-title>-->
+<!--              <v-card-title>{{practicePaperCount}}</v-card-title>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </v-card>-->
+<!--      </v-col>-->
     </v-row>
 <!--用户考试活跃度-->
 
@@ -55,7 +55,7 @@ export default {
       examPaperCount: 0,
       userCount: 0,
       questionCount: 0,
-      practicePaperCount: 0
+      // practicePaperCount: 0
     };
   },
   created() {
@@ -65,7 +65,7 @@ export default {
       this.userCount=res.userCount
       this.questionCount=res.questionCount
       this.examPaperCount=res.examPaperCount
-      this.practicePaperCount=res.practicePaperCount
+      // this.practicePaperCount=res.practicePaperCount
     })
   },
   methods: {}

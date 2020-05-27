@@ -5,7 +5,6 @@ import { get, post } from "./http";
 import user from "./user";
 import question from "./question";
 import paper from "./paper";
-import practice_paper from "./practice_paper";
 import subject from "./subject";
 import records from "./records";
 
@@ -48,13 +47,6 @@ export default {
   SubmitExam: paper.SubmitExam,
   PublishExamPaper:paper.PublishExamPaper,
 
-  PracticePaperList: practice_paper.PracticePaperList,
-  AddPracticePaper: practice_paper.AddPracticePaper,
-  SelPracticePaper: practice_paper.SelPracticePaper,
-  EditPracticePaper: practice_paper.EditPracticePaper,
-  DelPracticePaper: practice_paper.DelPracticePaper,
-
-
   SubjectList:subject.SubjectList,
   AddSubject:subject.AddSubject,
   SelSubject:subject.SelSubject,
@@ -62,5 +54,5 @@ export default {
   DelSubject:subject.DelSubject,
 
   RecordsList:records.RecordsList,
-  ExamResult:records.ExamResult,//查看某用户做该试卷的具体情况
+  AnswerSheet:records.AnswerSheet,//查看某用户做该试卷的具体情况
 };

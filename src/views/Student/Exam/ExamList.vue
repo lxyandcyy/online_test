@@ -20,48 +20,33 @@
             :to="{
               path: '/exam-paper/do/'+slotScope.item.id
             }"
-            v-show="!hadDo(slotScope.item.id)"
           >
             <v-btn color="primary" small >开始答题</v-btn>
           </router-link>
-          <router-link
-                  :to="{
-              path: '/exam-paper/record/'+slotScope.item.id
-            }"
-                  v-show="hadDo(slotScope.item.id)"
-          >
-            <v-btn color="green" small >查看答题卡</v-btn>
-          </router-link>
-        </template>
-      </v-data-table>
-
-<!--      已答试卷-->
-<!--      <v-data-table :headers="headers" :items="table2">-->
-<!--        &lt;!&ndash; 操作 &ndash;&gt;-->
-<!--        <template v-slot:item.action="slotScope">-->
 <!--          <router-link-->
 <!--                  :to="{-->
-<!--              path: '/exam-paper/do/'+slotScope.item.id-->
+<!--              path: '/exam-paper/record/'+slotScope.item.id-->
 <!--            }"-->
-<!--                  :disabled="disabled"-->
+<!--                  v-show="hadDo(slotScope.item.id)"-->
 <!--          >-->
-<!--            <v-btn color="primary" small :disabled="disabled">开始答题</v-btn>-->
+<!--            <v-btn color="green" small >查看答题卡</v-btn>-->
 <!--          </router-link>-->
-<!--        </template>-->
-<!--      </v-data-table>-->
+        </template>
+      </v-data-table>
     </v-card>
   </div>
 </template>
 
 <script>
-export default {
+  import TimeConverse from '@/utils/timeConverse'
+  export default {
   name: "ExamList",
   data() {
     return {
       search: "",
       headers: [
         { text: "试卷名称", value: "name" },
-        { text: "学科", value: "SubjectId" },
+        { text: "学科", value: "subjectName" },
         { text: "截止日期(Date)", value: "endTime" },
         { text: "操作", value: "action" },
       ],
@@ -82,20 +67,15 @@ export default {
             d.push({
               key: index,
               id:item.id,
-              SubjectId: item.SubjectId,
+              subjectName: item.Subject.name,
               name: item.name,
-              endTime: item.endTime,
+              endTime: TimeConverse.utcToLocal(item.endTime),
             });
           }
         });
         this.table = d;
       });
     },
-    // 判断某试卷是否已做
-    hadDo(examPaperId){
-      // 查询考试记录
-      return false
-    }
   },
 };
 </script>
