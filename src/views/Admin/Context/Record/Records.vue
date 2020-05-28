@@ -23,6 +23,8 @@
 </template>
 
 <script>
+    import TimeConverse from '@/utils/timeConverse'
+
     export default {
         name: "Records",
         data() {
@@ -33,7 +35,7 @@
                     { text: "做题日期", value: "doTime" },
                     { text: "耗费时间（s）", value: "spendTime" },
                     { text: "得分", value: "userScore" },
-                    { text: "答题人", value: "userId" },
+                    { text: "答题人", value: "userName" },
                     // { text: "操作", value: "action" },
                 ],
                 table: [],
@@ -51,11 +53,11 @@
                         d.push({
                             id: item.id,
                             key: index,
-                            name:item.id,
-                            doTime: item.doTime,
+                            name:item.paperName,
+                            doTime: TimeConverse.utcToLocal(item.doTime),
                             spendTime: item.spendTime,
                             userScore: item.userScore,
-                            userId: item.userId,
+                            userName: item.userName,
                         });
                     });
                     this.table = d;

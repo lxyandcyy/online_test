@@ -35,16 +35,25 @@
                             data: [5, 20, 20, 10, 10, 20]//考试分数
                         }
                     ]
-                }
+                },
+                HisData:[{}]
             }
         },
-        created(){
+        async created(){
             this.$nextTick(() => {
                 this.$refs.chart.resize();
             })
+            this.HisData=await this.getHistogramData()
+
         },
         methods: {
-
+            async getHistogramData(){
+                let res=await this.$api.Histogram(this.$route.params.id)
+                console.log(res)
+                if(res.code===200){
+                    return [res.data.passCount,res.data.unPassCount]
+                }
+            }
         }
     };
 </script>

@@ -159,6 +159,7 @@
                 remainTime: 0,
                 timer: null,
                 examPaper: {
+                    questions:[{}]
                     // name: "",
                     // countDown: 0,
                     // createUser: 0,
@@ -170,7 +171,7 @@
                     //    select_option:,
                     // }], //题目列表
                 },
-                questions:[{}
+                questions:[{ }
                     // Options: Array(2)
                     // length: 2
                     // SubjectId: 18

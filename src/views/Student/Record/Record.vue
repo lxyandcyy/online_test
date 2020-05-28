@@ -48,6 +48,7 @@
                                                 active-class="purple"
                                                 v-model="questions[current_question].select_index">
                                             <v-chip
+                                                    disabled
                                                     class="option"
                                                     v-for="(item, i) in questions[current_question].Options"
                                                     :key="i">
@@ -61,12 +62,9 @@
                         </v-list-item>
 
                         <v-card-actions class="btn">
-                            <v-btn class="ma-2" outlined color="indigo" @click="preQue()"
-                            >上一题</v-btn
-                            >
-                            <v-btn class="ma-2" outlined color="indigo" @click="nextQue()"
-                            >下一题</v-btn
-                            >
+                            <v-btn class="ma-2" outlined color="indigo" @click="preQue()">上一题</v-btn>
+                            <v-btn class="ma-2" outlined color="indigo" @click="nextQue()">下一题</v-btn>
+                            <v-btn class="ma-2" tile color="indigo" dark @click="goBack">返回</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-container>
@@ -87,7 +85,7 @@
                         <div class="py-3">
                             <v-btn
                                     class="ma-2"
-                                    :outlined="item.select_option === -1 ? true : false"
+                                    :outlined="item.status.OptionId === null ? true : false"
                                     fab
                                     color="teal"
                                     v-for="(item, i) in questions"
@@ -126,7 +124,9 @@
                     //    select_option:,
                     // }], //题目列表
                 },
-                questions:[{}
+                questions:[{
+                    status: {}
+                }
                     // Options: Array(2)
                     // length: 2
                     // SubjectId: 18
@@ -157,7 +157,6 @@
                 this.userScore=answer.data.userScore
                 this.examPaper={...answer.data.examPaper}
                 this.questions=[...answer.data.question_records]
-                this.examPaper.questions=[]
                 //设置所选项 select_index
                 for(let i=0;i<this.questions.length;i++){
                     let j;
@@ -174,10 +173,10 @@
                     }
                 }
 
-                console.log(this.examPaper)
+                console.log(this.questions)
             },
             nextQue() {
-                if (this.current_question < this.examPaper.questions.length - 1) {
+                if (this.current_question < this.questions.length - 1) {
                     this.getOptionFromQueItems(++this.current_question);
                 } else {
                     this.$message.info('没有题目啦！')
@@ -200,7 +199,7 @@
                 // 查询某OptionId所对应的index
                 let options=this.questions[queIndex].Options
                 for(let i=0;i<this.questions[queIndex].Options.length;i++){
-                    if(options[i].id===this.examPaper.questions[queIndex].select_option){
+                    if(options[i].id===this.questions[queIndex].status.OptionId){
                         this.select_index=i;
                         break;
                     } else{
@@ -208,6 +207,9 @@
                     }
                 }
             },
+            goBack(){
+                this.$router.push({path:`/student-layout/record/`+this.user.id})
+            }
         },
     };
 </script>

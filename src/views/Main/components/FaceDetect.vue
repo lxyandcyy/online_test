@@ -122,7 +122,7 @@
           switch (res.error_code) {
             case 0:
               const score = res.result.user_list[0].score; //匹配分数
-              if (score >= 95) {
+              if (score >= 90) {
                 this.detectTips = "登录成功";
                 this.$store.commit("updateUser", {
                   user_id: res.result.user_list[0].user_id

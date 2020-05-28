@@ -16,7 +16,16 @@ export default {
   }, //验证log_token
   countData: () => {
     return get("http://localhost:6001/statistic/countData");
-  }, //验证log_token
+  }, //获取题目、试卷、用户数量
+  Pie: (examPaperId) => {
+    return get("http://localhost:6001/statistic/pie/"+examPaperId);
+  },
+  Bar: (examPaperId) => {
+    return get("http://localhost:6001/statistic/bar/"+examPaperId);
+  },
+  Histogram: (examPaperId) => {
+    return get("http://localhost:6001/statistic/histogram/"+examPaperId);
+  },
 
   // user_info表相关、登录注册相关操作
   getToken: user.getToken, //获取access_Token

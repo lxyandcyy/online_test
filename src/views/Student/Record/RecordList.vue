@@ -15,7 +15,7 @@
             <v-data-table :headers="headers" :items="table" :search="search">
                 <!-- 操作 -->
                 <template v-slot:item.action="slotScope">
-                    <v-btn color="green" small @click="examResult($route.params.id, slotScope.item.id)">查看答题卡</v-btn>
+                    <v-btn color="green" small @click="examResult($route.params.id, slotScope.item.examPaperId)">查看答题卡</v-btn>
                 </template>
             </v-data-table>
         </v-card>
@@ -52,6 +52,7 @@
                         d.push({
                             id: item.id,
                             key: index,
+                            examPaperId:item.examPaperId,
                             paperName:item.paperName,
                             doTime: TimeConverse.utcToLocal(item.doTime),
                             spendTime: item.spendTime,
