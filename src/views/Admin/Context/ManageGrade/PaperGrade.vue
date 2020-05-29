@@ -18,11 +18,11 @@
             :search="table.search">
       <!-- 操作 -->
       <template v-slot:item.action="slotScope">
-        <router-link :to="{path:'/layout/paper-grade/look/'+slotScope.item.id}">
-          <v-btn class="mr-2" color="primary"  small >
+<!--        <router-link :to="{path:'/layout/paper-grade/look/'+slotScope.item.id}">-->
+          <v-btn class="mr-2" color="primary"  small @click="lookGrade(slotScope.item.id)">
             查看试卷分析报告
           </v-btn>
-        </router-link>
+<!--        </router-link>-->
       </template>
     </v-data-table>
 
@@ -122,6 +122,16 @@
       };
     },
     methods: {
+      async lookGrade(examPaperId){
+        //检测是否有人做过该试卷
+          let res=await this.$api.Bar(examPaperId)
+          console.log(res)
+          if(res.code===200){
+            this.$router.push({path:'/layout/paper-grade/look/'+examPaperId})
+          }else if(res.code===400){
+            this.$message.error(`${res.msg}`)
+          }
+      },
       async searchExamPaperList() {
         let d = [];
         let res = await this.$api.PaperList();

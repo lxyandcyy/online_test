@@ -1,5 +1,5 @@
 <template>
-    <div id="look-paper-grade">
+    <div id="look-paper-grade-ad">
         <v-col class="flex justify-space-around" >
             <Pie></Pie>
             <Histogram></Histogram>
@@ -25,8 +25,7 @@
 </script>
 
 <style lang="scss" scoped>
-    #look-paper-grade{
-        margin-bottom: 5px;
+    #look-paper-grade-ad{
         .my-chart {
             margin: 0 auto;
         }

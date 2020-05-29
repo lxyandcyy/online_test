@@ -1,8 +1,10 @@
 <template>
-    <div id="bar">
+    <div id="admin-bar">
         <v-card class="pa-5">
-
-            <v-chart class="my-chart" :options="bar"/>
+            <v-chart class="my-chart" :options="bar"
+                     style="width: 100%;"
+                     :auto-resize="true"
+                     ref="chart"/>
         </v-card>
     </div>
 </template>
@@ -10,39 +12,54 @@
 <script>
     export default {
 
-     data(){
-       return{
-           bar: {
-               title: {
-                   text: "ECharts 入门示例"
-               },
-               color:['#FB8C00'],
-               tooltip: {},
-               legend: {
-                   data: ["销量"]
-               },
-               xAxis: {
-                   data: ["最高分", "平均分", "最低分"]
-               },
-               yAxis: {},
-               series: [
-                   {
-                       name: "销量",
-                       type: "bar",
-                       data: [5, 20, 20, 10, 10, 20]
-                   }
-               ]
-           }
-       }
-     },
-    methods: {
-
-     }
+        data(){
+            return{
+                bar: {
+                    title: {
+                        text: "试卷最低分、平均分、最高分分布"
+                    },
+                    color:['#FB8C00'],
+                    tooltip: {},
+                    xAxis: {
+                        data: ["最低分", "平均分", "最高分","总分"]
+                    },
+                    yAxis: {},
+                    series: [
+                        {
+                            name: "分数",
+                            type: "bar",
+                            data: [0,0,0,0],
+                        },
+                    ]
+                },
+                barData:[]
+            }
+        },
+        async created(){
+            this.$nextTick(() => {
+                this.$refs.chart.resize();
+            })
+            this.barData=await this.getData()
+            console.log(this.barData)
+            this.bar.series[0].data=this.barData;
+        },
+        methods: {
+            async getData(){
+                let res=await this.$api.Bar(this.$route.params.id)
+                console.log(res)
+                if(res.code===200){
+                    return [res.data.lowScore,res.data.averageScore,res.data.highScore,res.data.paperScore]
+                }else if(res.code===400){
+                    this.$message.error(`${res.msg}`)
+                    this.$router.push({path:'/layout/paper-grade'})
+                }
+            }
+        }
     };
 </script>
 
 <style lang="scss" scoped>
-    #bar{
+    #admin-bar{
         margin-bottom: 5px;
         .my-chart {
             margin: 0 auto;

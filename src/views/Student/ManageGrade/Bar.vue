@@ -1,12 +1,10 @@
 <template>
     <div id="bar">
         <v-card class="pa-5">
-
             <v-chart class="my-chart" :options="bar"
                      style="width: 100%;"
                      :auto-resize="true"
-                     ref="chart"
-            />
+                     ref="chart"/>
         </v-card>
     </div>
 </template>
@@ -18,34 +16,44 @@
        return{
            bar: {
                title: {
-                   text: "ECharts 入门示例"
+                   text: "试卷最低分、平均分、最高分分布"
                },
                color:['#FB8C00'],
                tooltip: {},
-               legend: {
-                   data: ["销量"]
-               },
                xAxis: {
-                   data: ["最高分", "平均分", "最低分"]
+                   data: ["最低分", "平均分", "最高分","总分"]
                },
                yAxis: {},
                series: [
                    {
-                       name: "销量",
+                       name: "分数",
                        type: "bar",
-                       data: [5, 20, 20, 10, 10, 20]
-                   }
+                       data: [0,0,0,0],
+                   },
                ]
-           }
+           },
+           barData:[]
        }
      },
-        created(){
+        async created(){
             this.$nextTick(() => {
                 this.$refs.chart.resize();
             })
+            this.barData=await this.getData()
+            console.log(this.barData)
+            this.bar.series[0].data=this.barData;
         },
     methods: {
-
+        async getData(){
+            let res=await this.$api.Bar(this.$route.params.id)
+            console.log(res)
+            if(res.code===200){
+                return [res.data.lowScore,res.data.averageScore,res.data.highScore,res.data.paperScore]
+            }else if(res.code===400){
+                this.$message.error(`${res.msg}`)
+                router.push({path:'/student-layout/paper-grade'})
+            }
+        }
      }
     };
 </script>

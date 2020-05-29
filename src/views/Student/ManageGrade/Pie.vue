@@ -1,14 +1,12 @@
 <template>
     <div id="pie">
-        <v-card class="pa-5">
-            及格率
+        <v-card class="pa-5" min-height="200">
             <v-chart
                     class="my-chart"
                      :options="pie"
-                     style="width: 100%;height:100%;"
+                     style="width: 100%;  height: 200px;"
                      :auto-resize="true"
-                    ref="chart"
-            />
+                    ref="chart"/>
         </v-card>
     </div>
 </template>
@@ -18,10 +16,24 @@
         data(){
             return{
                 pie: {
+                    title:{
+                        text:'及格率'
+                    },
+                    grid: {
+                        top: '4%',
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    tooltip:{},
                     color: ['#90CAF9', '#EF9A9A'],
                     series : [
                         {
                             type:'pie',
+                            label: {
+                              show: true
+                            },
                             // 数据
                             data:[
                                 {value:0, name:`及格`},
