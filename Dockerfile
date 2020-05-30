@@ -1,4 +1,6 @@
 FROM nginx
-COPY dist/ /usr/share/nginx/html/
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY cert/ /etc/nginx/cert/
+WORKDIR /app
+COPY dist .
+
+COPY cret/ /cret
+COPY nginx.conf /etc/nginx/nginx.conf

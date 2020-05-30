@@ -12,22 +12,22 @@ import records from "./records";
 
 export default {
   verifyToken: (token) => {
-    return get("http://localhost:6001/verify-token", token);
+    return get("/verify-token", token);
   }, //验证log_token
   countData: () => {
-    return get("http://localhost:6001/statistic/countData");
+    return get("/statistic/countData");
   }, //获取题目、试卷、用户数量
   Pie: (examPaperId) => {
-    return get("http://localhost:6001/statistic/pie/"+examPaperId);
+    return get("/statistic/pie/"+examPaperId);
   },
   Bar: (examPaperId) => {
-    return get("http://localhost:6001/statistic/bar/"+examPaperId);
+    return get("/statistic/bar/"+examPaperId);
   },
   Histogram: (examPaperId) => {
-    return get("http://localhost:6001/statistic/histogram/"+examPaperId);
+    return get("/statistic/histogram/"+examPaperId);
   },
   Activity: (userId) => {
-    return get("http://localhost:6001/statistic/Activity/",userId);
+    return get("/statistic/Activity/",userId);
   },
 
   // user_info表相关、登录注册相关操作

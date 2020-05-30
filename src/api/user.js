@@ -5,7 +5,7 @@ export default {
    * 获取access_Token
    * @returns {-} access_token
    */
-  getToken: g => post("http://localhost:6001/user/getToken", g),
+  getToken: g => post("/user/getToken", g),
 
   /**
    * 用户注册信息
@@ -14,33 +14,33 @@ export default {
    * @param {String} user_type [用户类型] 管理员or普通用户
    *
    */
-  postRegInfo: p => post("http://localhost:6001/user/regInfo", p),
+  postRegInfo: p => post("/user/regInfo", p),
 
   /**
    * 用户账号密码验证
    * @param  user_id [用户名]
    * @param  password [密码]
    */
-  postDetectInfo: p => post("http://localhost:6001/user/detectInfo", p),
+  postDetectInfo: p => post("/user/detectInfo", p),
 
   /**
    * 用户人脸绑定注册
    */
-  postRegFace: p => post("http://localhost:6001/user/regFace", p),
+  postRegFace: p => post("/user/regFace", p),
   /**
    * 人脸登录
    */
-  Login: p => post("http://localhost:6001/user/Login", p),
+  Login: p => post("/user/Login", p),
   /**
    * 人脸修改
    */
-  ChangeFace: p => post("http://localhost:6001/user/changeFace", p),
+  ChangeFace: p => post("/user/changeFace", p),
   // 所有用户列表
-  AllUserInfo: () => get("http://localhost:6001/user/allUserInfo"),
+  AllUserInfo: () => get("/user/allUserInfo"),
   // 单个用户信息
-  SelUser: g => get("http://localhost:6001/user/sel-user", g),
+  SelUser: g => get("/user/sel-user", g),
   // 修改当前用户密码
-  UpdateUser: p => post("http://localhost:6001/user/update-user", p),
+  UpdateUser: p => post("/user/update-user", p),
 
-  DelUser:body=>post("http://localhost:6001/user/delete", body)
+  DelUser:body=>post("/user/delete", body)
 };

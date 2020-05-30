@@ -7,6 +7,13 @@ axios.defaults.timeout = 10000;
 axios.defaults.headers.post["Content-Type"] =
   "application/x-www-form-urlencoded;charset=UTF-8";
 
+const ishttps = 'https:' == document.location.protocol ? true : false
+const instance = axios.create({
+  baseURL: ishttps ? process.env.VUE_APP_API_BASEURL_HTTPS : process.env.VUE_APP_API_BASEURL_HTTP,
+  timeout: 10000,
+})
+
+
 /**
  * 封装get方法
  * get方法，对应get请求
@@ -15,7 +22,7 @@ axios.defaults.headers.post["Content-Type"] =
  */
 export function get(url, params) {
   return new Promise((resolve, reject) => {
-    axios
+    instance
       .get(url, {
         params: params,
       })
@@ -36,7 +43,7 @@ export function get(url, params) {
  */
 export function post(url, body) {
   return new Promise((resolve, reject) => {
-    axios
+    instance
       .post(url, body)
       .then((res) => {
         resolve(res.data);

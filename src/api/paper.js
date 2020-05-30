@@ -1,11 +1,11 @@
 import { get, post } from "./http";
 
 export default {
-  PaperList: () => get("http://localhost:6001/exam-paper"), //获取所有试卷
-  AddPaper: (query) => post("http://localhost:6001/exam-paper/add", query), //新增试卷
-  SelPaper: (id) => get("http://localhost:6001/exam-paper/" + id), //获取单个题目
-  UpdatePaper: (id,body) => post("http://localhost:6001/exam-paper/update/"+id,body),
-  DelPaper: (id) => post("http://localhost:6001/exam-paper/delete/"+id),
-  SubmitExam: (data) => post("http://localhost:6001/exam-paper/submit", data),
-  PublishExamPaper:(id,body)=> post('http://localhost:6001/exam-paper/publish/'+id,body)//发布试卷
+  PaperList: () => get("/exam-paper"), //获取所有试卷
+  AddPaper: (query) => post("/exam-paper/add", query), //新增试卷
+  SelPaper: (id) => get("/exam-paper/" + id), //获取单个题目
+  UpdatePaper: (id,body) => post("/exam-paper/update/"+id,body),
+  DelPaper: (id) => post("/exam-paper/delete/"+id),
+  SubmitExam: (data) => post("/exam-paper/submit", data),
+  PublishExamPaper:(id,body)=> post('/exam-paper/publish/'+id,body)//发布试卷
 };
