@@ -2,7 +2,7 @@
     <div id="records">
         <v-card flat tile>
             <v-card-title>
-                考试记录
+                测试记录
                 <v-spacer></v-spacer>
                 <v-text-field
                         v-model="search"

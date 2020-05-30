@@ -49,7 +49,7 @@
                     <v-list-item-icon>
                         <v-icon>healing</v-icon>
                     </v-list-item-icon>
-                    <v-list-item-title>考试记录</v-list-item-title>
+                    <v-list-item-title>测试记录</v-list-item-title>
                 </v-list-item>
             </router-link>
         </v-list>
@@ -115,7 +115,7 @@ export default {
         },
         {
           action: 'healing',
-          title: '考试结果分析',
+          title: '测试结果分析',
           items: [
             { title: '试卷成绩分析' ,path:'/layout/paper-grade'},
           ],

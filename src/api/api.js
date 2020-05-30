@@ -26,6 +26,9 @@ export default {
   Histogram: (examPaperId) => {
     return get("http://localhost:6001/statistic/histogram/"+examPaperId);
   },
+  Activity: (userId) => {
+    return get("http://localhost:6001/statistic/Activity/",userId);
+  },
 
   // user_info表相关、登录注册相关操作
   getToken: user.getToken, //获取access_Token

@@ -58,8 +58,19 @@
                                         </v-chip-group>
                                     </v-item>
                                 </v-list-item-subtitle>
+
+                                <div class="my-2">
+                                    结果：
+                                    <v-btn depressed outlined small color="error">{{questions[current_question].status.correct===true? '正确':'错误'}}</v-btn>
+                                </div>
+                                <div class="my-2">
+                                    正确答案：{{questions[current_question].correct_label}}
+                                </div>
+
                             </v-list-item-content>
                         </v-list-item>
+
+
 
                         <v-card-actions class="btn">
                             <v-btn class="ma-2" outlined color="indigo" @click="preQue()">上一题</v-btn>
@@ -161,10 +172,10 @@
                 for(let i=0;i<this.questions.length;i++){
                     let j;
                     for(j=0;j<this.questions[i].Options.length;j++){
+                        //设置初始所选项
                         if(this.questions[i].status.OptionId===this.questions[i].Options[j].id){
-                            //设置初始所选项
-                            this.questions[i].select_index=j;
-                            break;
+                           this.questions[i].select_index=j;
+                           break;
                         }
                     }
                     //如果该题未答
@@ -172,6 +183,18 @@
                         this.questions[i].select_index=-1;
                     }
                 }
+
+                //查询正确选项
+                for(let i=0;i<this.questions.length;i++){
+                    let j;
+                    for(j=0;j<this.questions[i].Options.length;j++){
+                        if(this.questions[i].Options[j].isCorrect===true){
+                            this.questions[i].correct_label=this.questions[i].Options[j].label;
+                            break;
+                        }
+                    }
+                }
+
 
                 console.log(this.questions)
             },
@@ -234,5 +257,8 @@
     .btn {
         display: grid;
         grid-template: 1fr 1fr 2fr;
+    }
+    #record ::v-deep .v-list-item__title {
+        white-space: pre-wrap;
     }
 </style>

@@ -55,10 +55,10 @@
     };
   },
   created() {
-    this.searchList();
+    this.searchPaper();
   },
   methods: {
-    searchList() {
+    searchPaper() {
       let d = [];
       this.$api.PaperList().then((res) => {
         console.log(res);

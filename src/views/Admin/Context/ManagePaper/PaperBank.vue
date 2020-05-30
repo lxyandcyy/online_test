@@ -1,7 +1,7 @@
 <template>
   <div id="paper-bank">
     <v-card-title>
-      试卷列表
+      测试卷
       <v-spacer></v-spacer>
       <v-text-field
               v-model="table.search"

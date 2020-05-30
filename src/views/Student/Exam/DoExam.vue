@@ -367,4 +367,7 @@
         display: grid;
         grid-template: 1fr 1fr 2fr;
     }
+    #do-exam ::v-deep .v-list-item__title {
+        white-space: pre-wrap;
+    }
 </style>
