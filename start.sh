@@ -2,14 +2,14 @@
 
 echo "停止正在运行的docker容器"
 
-docker stop vue-app
-docker rm vue-app
+sudo docker stop vue-app
+sudo docker rm vue-app
 
-npm install
+sudo yarn install
 
 echo "开始自动构建"
 
-(sudo NODE_OPTIONS=--max_old_space_size=1024 npm run build)
+(sudo NODE_OPTIONS=--max_old_space_size=1024 yarn build)
 
 exit_code=$?
 
@@ -23,7 +23,7 @@ else
   echo "编译成功，打包镜像为docker"
 fi
 
-docker build --no-cache . -t online_test:latest
+sudo docker build --no-cache . -t online_test:latest
 
 
 if [ $? -eq 0 ] 
@@ -35,7 +35,7 @@ else
 fi
 
 echo "运行容器"
-docker run -d -p 80:80 -p 443:443 --name vue-app online_test:latest
+sudo docker run -d -p 80:80 -p 443:443 --name vue-app online_test:latest
 # docker run -d --network=host --name vue-app libdashboard:latest
 
 exit 0

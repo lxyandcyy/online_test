@@ -2,5 +2,5 @@ FROM nginx
 WORKDIR /app
 COPY dist .
 
-COPY cret/ /cret
+COPY cert/ /cert/
 COPY nginx.conf /etc/nginx/nginx.conf
