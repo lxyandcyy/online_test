@@ -15,7 +15,8 @@
     <v-data-table
             :headers="table.headers"
             :items="table.desserts"
-            :search="table.search">
+            :search="table.search"
+            :items-per-page="10">
       <!-- 操作 -->
       <template v-slot:item.action="slotScope">
           <v-btn class="mr-2" color="primary"  small @click="lookGrade(slotScope.item.id)">

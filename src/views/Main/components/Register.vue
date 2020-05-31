@@ -10,12 +10,6 @@
       <div class="bt">
         <input type="password" placeholder="请输入密码" v-model="password" />
       </div>
-      <div>
-        <a-radio-group  v-model="value">
-          <a-radio :value="1">普通用户</a-radio>
-          <a-radio :value="2">管理员</a-radio>
-        </a-radio-group>
-      </div>
       <div class="bt">
         <button @click="Register()">点击绑定人脸</button>
       </div>
@@ -32,15 +26,9 @@
 export default {
   data() {
     return {
-      value: 1, //用户类型（管理员或普通用户）
         user_id: "",
         password: ""
     };
-  },
-  computed: {
-    user_type() {
-      return this.value === 1 ? "USER" : "ADMIN";
-    }
   },
   methods: {
     // 提交注册信息
@@ -48,7 +36,7 @@ export default {
       this.$store.commit("updateUser", {
         user_id:this.user_id,
         password:this.password,
-        user_type:this.user_type
+        user_type:"USER"
       }); //注册信息存进vuex
       this.RegInfo();//提交用户基本信息
     },

@@ -12,8 +12,8 @@
       </div>
       <div class="bt">
         <a-radio-group v-model="value">
-          <a-radio :value="1">普通用户</a-radio>
-          <a-radio :value="2">管理员</a-radio>
+          <a-radio :value="1" style="color: white">普通用户</a-radio>
+          <a-radio :value="2" style="color: white">管理员</a-radio>
         </a-radio-group>
       </div>
       <div class="bt">

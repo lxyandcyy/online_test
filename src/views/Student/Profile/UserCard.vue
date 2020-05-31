@@ -9,9 +9,10 @@
 
       <v-col>
         <v-row justify="center">
-          <v-avatar>
-            <img src="https://s1.ax1x.com/2020/05/20/YojzlT.gif" alt="John">
-          </v-avatar>
+          <!-- 头像 -->
+          <v-btn icon large>
+            <v-icon large>mdi-account-circle</v-icon>
+          </v-btn>
         </v-row>
         <v-row justify="center">
           <strong>{{ userInfo.user_id }}</strong>
@@ -20,7 +21,7 @@
           <span> {{ userInfo.user_type === "ADMIN" ? "管理员" : "考生" }}</span>
         </v-row>
         <v-divider class="mx-4"></v-divider>
-        <v-row >
+        <v-row class="mt-5 ml-4">
           <span>注册时间: {{ userInfo.reg_time }}</span>
         </v-row>
       </v-col>

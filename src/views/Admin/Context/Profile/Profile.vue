@@ -1,11 +1,11 @@
 <template>
   <div id="profile">
-    <div>
-      <v-row>
-        <v-col>
-          <UserCard :userInfo="userInfo"></UserCard>
+    <div >
+      <v-row style="margin: 0 auto">
+        <v-col cols="10">
+          <UserCard :userInfo="userInfo" ></UserCard>
         </v-col>
-        <v-col>
+        <v-col cols="10">
           <Account :userInfo="userInfo"></Account>
         </v-col>
       </v-row>

@@ -188,6 +188,7 @@
             };
         },
         async created() {
+            console.log(this.$route.params)
             let examPaper=await this.searchPaper()
             // 获取详细的题目选项
             let all_questions=[]
@@ -284,7 +285,7 @@
             // 查看考试结果
             goExamResult(){
                 this.dialog_tips.dialog2 = false;
-                this.$router.push({path:'/student-layout/record/'+this.$store.state.user.id})//前往考试记录的具体考试结果页面
+                this.$router.push({path:'/one-record',query:{userId:this.$store.state.user.id, examPaperId:this.$route.params.id}})//前往考试记录的具体考试结果页面
             },
             // 确认是否提交
             confirmSubmitExam() {

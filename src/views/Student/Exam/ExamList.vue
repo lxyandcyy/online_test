@@ -13,16 +13,10 @@
         ></v-text-field>
       </v-card-title>
 <!--      未答试卷-->
-      <v-data-table :headers="headers" :items="table" :search="search">
+      <v-data-table :headers="headers" :items="table" :search="search" :items-per-page="10">
         <!-- 操作 -->
         <template v-slot:item.action="slotScope">
-          <router-link
-            :to="{
-              path: '/exam-paper/do/'+slotScope.item.id
-            }"
-          >
-            <v-btn color="primary" small >开始答题</v-btn>
-          </router-link>
+            <v-btn color="primary" small @click="doExam(slotScope.item.id)">开始答题</v-btn>
 <!--          <router-link-->
 <!--                  :to="{-->
 <!--              path: '/exam-paper/record/'+slotScope.item.id-->
@@ -76,6 +70,20 @@
         this.table = d;
       });
     },
+    doExam(examPaperId){
+      // 判断用户是否做过该试卷
+       this.$api.SubmitExam({
+        userId:this.$store.state.user.id,
+        examPaperId: examPaperId,
+      }).then(res=>{
+        console.log(res)
+        if(res.msg=='用户已经做过该试题'){
+          this.$message.error(`${res.msg}`)
+        }else{
+          this.$router.push({path:'/exam-paper/do/'+examPaperId})
+        }
+       });
+    }
   },
 };
 </script>

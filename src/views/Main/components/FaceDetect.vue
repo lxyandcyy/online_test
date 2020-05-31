@@ -89,7 +89,7 @@
             case 0:
               this.detectTips = "人脸绑定成功！";
               this.$message.success('人脸绑定成功！');
-              this.$router.push({path:'/main'});
+              this.$router.push({path:'/main/login'});
               break;
             case 2213105:
               this.detectTips = "该账号已经绑定过人脸啦~请返回注册";
@@ -176,7 +176,7 @@
             case 0:
               this.detectTips = "人脸修改成功！";
               this.$message.success('人脸修改成功！')
-              this.$router.push({path:'/main'})
+              this.$router.push({path:'/main/login'})
               break;
             case 222001:
               this.dengdai("没有检测到人脸，正在重新检测。。");

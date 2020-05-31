@@ -12,7 +12,7 @@
                         hide-details
                 ></v-text-field>
             </v-card-title>
-            <v-data-table :headers="headers" :items="table" :search="search">
+            <v-data-table :headers="headers" :items="table" :search="search" :items-per-page="10">
                 <!-- 操作 -->
                 <template v-slot:item.action="slotScope">
                     <v-btn color="green" small @click="examResult($route.params.id, slotScope.item.examPaperId)">查看答题卡</v-btn>

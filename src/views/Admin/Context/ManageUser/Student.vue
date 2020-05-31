@@ -15,6 +15,7 @@
             :headers="table.headers"
             :items="table.desserts"
             :search="table.search"
+            :items-per-page="20"
     >
       <!-- 操作 -->
       <template v-slot:item.action="slotScope">

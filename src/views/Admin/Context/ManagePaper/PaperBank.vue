@@ -18,7 +18,8 @@
     <v-data-table
             :headers="table.headers"
             :items="table.desserts"
-            :search="table.search">
+            :search="table.search"
+            :items-per-page="20">
       <!-- 操作 -->
       <template v-slot:item.action="slotScope">
         <router-link :to="{path:'/layout/exam-paper/look/'+slotScope.item.id}">
